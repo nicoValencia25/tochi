@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const diasTotales = Math.floor(diferencia / (1000 * 60 * 60 * 24));
         
         if(contadorElemento) {
-            contadorElemento.innerHTML = diasTotales + " días eligiéndonos todos los días.";
+            contadorElemento.innerHTML = diasTotales + " días eligiéndonos y amándonos siempre.";
         }
     }
     actualizarContador();
