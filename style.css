@@ -80,6 +80,17 @@ h1, h2, .titulo-doc, .firma, .caption {
     box-shadow: var(--sombra-suave);
     display: inline-block;
     font-weight: bold;
+    cursor: pointer; /* Hace que aparezca la manito de botón */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contador:hover {
+    transform: scale(1.05); /* Se agranda un poquito */
+    box-shadow: 0 15px 35px rgba(124, 163, 143, 0.3);
+}
+
+.contador:active {
+    transform: scale(0.95); /* Hace el efecto de "hundirse" al tocarlo */
 }
 
 .cartas-lista-section {

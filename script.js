@@ -1,72 +1,73 @@
-// Funcionalidad para expandir las cartas en la misma página
-const cabeceras = document.querySelectorAll('.carta-cabecera');
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. LÓGICA DE LAS CARTAS (ACORDEÓN)
+    const cabeceras = document.querySelectorAll('.carta-cabecera');
+    cabeceras.forEach(cabecera => {
+        cabecera.addEventListener('click', () => {
+            const itemActual = cabecera.parentElement;
+            document.querySelectorAll('.carta-item').forEach(item => {
+                if(item !== itemActual) {
+                    item.classList.remove('activa');
+                }
+            });
+            itemActual.classList.toggle('activa');
+        });
+    });
 
-cabeceras.forEach(cabecera => {
-    cabecera.addEventListener('click', () => {
-        const itemActual = cabecera.parentElement;
+    // 2. LÓGICA DEL CONTADOR Y EXPLOSIÓN
+    const fechaInicio = new Date(2025, 11, 12); // Año, Mes (Mayo es 4), Día
+    const contadorElemento = document.getElementById('contador');
+
+    function actualizarContador() {
+        const ahora = new Date();
+        const diferencia = ahora - fechaInicio;
+        const diasTotales = Math.floor(diferencia / (1000 * 60 * 60 * 24));
         
-        // Cierra todas las otras cartas cuando abrís una
-        document.querySelectorAll('.carta-item').forEach(item => {
-            if(item !== itemActual) {
-                item.classList.remove('activa');
+        if(contadorElemento) {
+            contadorElemento.innerHTML = diasTotales + " días eligiéndonos todos los días.";
+        }
+    }
+    actualizarContador();
+    setInterval(actualizarContador, 60000);
+
+    // Acá está el evento del clic para la EXPLOSIÓN
+    if (contadorElemento) {
+        contadorElemento.addEventListener('click', () => {
+            // Dispara 60 mariposas aleatoriamente de golpe al tocar los días
+            for (let i = 0; i < 60; i++) {
+                setTimeout(crearMariposa, Math.random() * 800);
             }
         });
-
-        // Abre o cierra la carta que tocaste
-        itemActual.classList.toggle('activa');
-    });
-});
-
-// Lógica del contador de días
-const fechaInicio = new Date(2025, 11, 11); // Año, Mes (Mayo es 4), Día
-
-function actualizarContador() {
-    const ahora = new Date();
-    const diferencia = ahora - fechaInicio;
-    const diasTotales = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-    
-    const contadorElemento = document.getElementById('contador');
-    if(contadorElemento) {
-        contadorElemento.innerHTML = diasTotales + " días eligiéndonos y amándonos.";
     }
-}
 
-actualizarContador();
-setInterval(actualizarContador, 60000);
+    // 3. LÓGICA DE LAS MARIPOSAS
+    function crearMariposa() {
+        const mariposa = document.createElement('div');
+        mariposa.classList.add('mariposa');
+        mariposa.innerHTML = '🦋';
+        
+        // Posición y tamaño aleatorio
+        mariposa.style.left = Math.random() * 100 + 'vw';
+        const duracion = Math.random() * 7 + 8; // Vuelo lento y sutil entre 8 y 15 seg
+        mariposa.style.animationDuration = duracion + 's';
+        
+        const tamano = Math.random() * 2 + 1; // Tamaño entre 1 y 3 rem
+        mariposa.style.fontSize = tamano + 'rem';
+        
+        document.body.appendChild(mariposa);
+        
+        // Se elimina cuando termina para no trabar el celular
+        setTimeout(() => {
+            mariposa.remove();
+        }, duracion * 1000);
+    }
 
-// ==========================================
-// CREADOR DE MARIPOSAS (MODO LLUVIA INTENSA)
-// ==========================================
-function crearMariposa() {
-    const mariposa = document.createElement('div');
-    mariposa.classList.add('mariposa');
-    
-    mariposa.innerHTML = '🦋';
-    
-    // Posición horizontal aleatoria
-    mariposa.style.left = Math.random() * 100 + 'vw';
-    
-    // Duración aleatoria (entre 8 y 15 segundos para que haya distintas velocidades)
-    const duracion = Math.random() * 7 + 8;
-    mariposa.style.animationDuration = duracion + 's';
-    
-    // Tamaño aleatorio (entre 1rem y 3rem para más variedad)
-    const tamano = Math.random() * 2 + 1; 
-    mariposa.style.fontSize = tamano + 'rem';
-    
-    document.body.appendChild(mariposa);
-    
-    // Se elimina cuando termina de volar para no saturar la RAM del celu
-    setTimeout(() => {
-        mariposa.remove();
-    }, duracion * 1000);
-}
+    // Explosión inicial suave (solo 5 mariposas para dar la bienvenida)
+    for (let i = 0; i < 5; i++) {
+        setTimeout(crearMariposa, Math.random() * 2000);
+    }
 
-// 1. EXPLOSIÓN INICIAL: Creamos 25 mariposas de golpe apenas entra a la página
-// Le ponemos un mini delay aleatorio a cada una para que no salgan exactamente en bloque
-for (let i = 0; i < 25; i++) {
-    setTimeout(crearMariposa, Math.random() * 3000);
-}
+    // Lluvia constante de fondo mucho más relajada (1 mariposa nueva cada 2.5 segundos)
+    setInterval(crearMariposa, 2500);
 
-// 2. LLUVIA CONSTANTE: Creamos una mariposa nueva cada 350 milisegundos (¡es un montón!)
-setInterval(crearMariposa, 350);
+});
