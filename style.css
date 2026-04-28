@@ -473,13 +473,13 @@ footer {
     margin-bottom: 0;
 }
 
-/* Ajuste para que en el celu el botón no estorbe */
+/* SOLO para celulares (se achica y se pega un poco más al borde) */
 @media (max-width: 768px) {
     .btn-mimos {
-        bottom: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        font-size: 1rem;
+        bottom: 15px;
+        right: 15px;
+        padding: 8px 14px; /* Bien chiquito para que no estorbe */
+        font-size: 0.85rem; /* Letra más chica */
     }
 }
 
@@ -517,6 +517,30 @@ body.modo-noche .nota-secreta {
 /* Le damos un brillo a las mariposas para que destaquen en la oscuridad */
 body.modo-noche .mariposa {
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) brightness(1.5);
+}
+
+/* =========================================
+   PARCHE: FORZAR COLORES EN MODO NOCHE
+========================================= */
+body.modo-noche h1, 
+body.modo-noche h2, 
+body.modo-noche h3, 
+body.modo-noche p, 
+body.modo-noche .carta-cabecera {
+    color: var(--color-texto) !important;
+}
+
+/* Elementos que van con el azul clarito / celeste */
+body.modo-noche .firma,
+body.modo-noche .contador,
+body.modo-noche .firma-modal,
+body.modo-noche .fecha-btn,
+body.modo-noche .efecto-consola::after {
+    color: var(--color-secundario) !important;
+}
+
+body.modo-noche .contador {
+    border-color: rgba(138, 164, 200, 0.4); /* Borde azulado para el contador */
 }
 
 /* EFECTO TYPING UNIVERSAL */
