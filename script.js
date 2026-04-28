@@ -1,16 +1,69 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. LÓGICA DE LAS CARTAS (ACORDEÓN)
+    // 1. LÓGICA DE LAS CARTAS (ACORDEÓN CON TYPING UNIVERSAL)
     const cabeceras = document.querySelectorAll('.carta-cabecera');
+    
+    // PREPARACIÓN: Guardamos el HTML original de TODAS las cartas en memoria y las vaciamos
+    document.querySelectorAll('.carta-item').forEach(item => {
+        const contenido = item.querySelector('.texto-interno');
+        if (contenido) {
+            item.dataset.htmlOriginal = contenido.innerHTML; 
+            item.dataset.tipeado = "false"; 
+            contenido.innerHTML = ""; 
+        }
+    });
+
     cabeceras.forEach(cabecera => {
         cabecera.addEventListener('click', () => {
             const itemActual = cabecera.parentElement;
+            
+            // Cierra las otras cartas
             document.querySelectorAll('.carta-item').forEach(item => {
-                if (item !== itemActual) {
+                if(item !== itemActual) {
                     item.classList.remove('activa');
                 }
             });
-            itemActual.classList.toggle('activa');
+
+            // Abre o cierra la carta actual
+            const seAbre = itemActual.classList.toggle('activa');
+            
+            // Si la estamos abriendo y todavía no se tipeó, arrancamos el efecto
+            if (seAbre && itemActual.dataset.tipeado === "false") {
+                const contenido = itemActual.querySelector('.texto-interno');
+                const htmlOriginal = itemActual.dataset.htmlOriginal;
+                
+                contenido.classList.add('efecto-consola');
+                
+                let i = 0;
+                let htmlAcumulado = '';
+                
+                const timer = setInterval(() => {
+                    if (i >= htmlOriginal.length) {
+                        clearInterval(timer);
+                        contenido.classList.remove('efecto-consola');
+                        itemActual.dataset.tipeado = "true"; 
+                        return;
+                    }
+                    
+                    // EL PARSER CORREGIDO: Lee la etiqueta invisible y la saltea limpia
+                    if (htmlOriginal[i] === '<') {
+                        let tag = '';
+                        while (htmlOriginal[i] !== '>' && i < htmlOriginal.length) {
+                            tag += htmlOriginal[i];
+                            i++;
+                        }
+                        tag += '>';
+                        i++; // <--- ESTA ES LA CORRECCIÓN: Salta el '>' para no imprimirlo
+                        htmlAcumulado += tag;
+                    } else {
+                        htmlAcumulado += htmlOriginal[i];
+                        i++;
+                    }
+                    
+                    contenido.innerHTML = htmlAcumulado;
+                    
+                }, 35); // <--- Velocidad corregida a 35ms (ritmo humano natural)
+            }
         });
     });
 
@@ -77,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Acordate que sos mi lugar seguro, siempre.",
         "Te extraño mi amor no puedo vivir sin vos.",
         "Con tus 1.58 me tenés felizmente gobernado.",
-        "Sos mi chispita, lo que hace latir mi corazón más fuerte.",
+        "Sos mi chispita, la que hace latir mi corazón más fuerte.",
         "Te amo mas que nada en este mundo.",
         "Estamos condenados a estar juntos toda la vida. Está en el contrato.",
         "Sos la mujer mas hermosa de todo el mundo",

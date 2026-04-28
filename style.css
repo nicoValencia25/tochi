@@ -518,3 +518,16 @@ body.modo-noche .nota-secreta {
 body.modo-noche .mariposa {
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) brightness(1.5);
 }
+
+/* EFECTO TYPING UNIVERSAL */
+.efecto-consola::after {
+    content: '|';
+    animation: parpadeo-cursor 0.8s infinite;
+    color: var(--color-secundario);
+    font-weight: bold;
+}
+
+@keyframes parpadeo-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
