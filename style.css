@@ -482,3 +482,39 @@ footer {
         font-size: 1rem;
     }
 }
+
+/* =========================================
+   MODO NOCHE DE CUCHARITA 🌙
+========================================= */
+body.modo-noche {
+    /* Cambiamos la paleta a tonos noche */
+    --color-fondo: #0d1321;
+    --color-texto: #e0e6ed;
+    --color-principal: #1d2d44;
+    --color-secundario: #8aa4c8;
+    --color-linea: #3e5c76;
+    --cristal-fondo: rgba(13, 19, 33, 0.85);
+    --sombra-suave: 0 10px 30px rgba(0, 0, 0, 0.6);
+    
+    /* Fondo estrellado azul profundo */
+    background-image: radial-gradient(circle at top, #1d2d44 0%, #0d1321 100%);
+    color: var(--color-texto);
+    transition: background 1s ease, color 0.5s ease;
+}
+
+/* Oscurecemos las Polaroids para que no encandilen */
+body.modo-noche .polaroid-front, 
+body.modo-noche .polaroid-back {
+    background: #172436;
+    color: #e0e6ed;
+    border-color: #2a3d54;
+}
+
+body.modo-noche .nota-secreta {
+    color: #b0c4de;
+}
+
+/* Le damos un brillo a las mariposas para que destaquen en la oscuridad */
+body.modo-noche .mariposa {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) brightness(1.5);
+}

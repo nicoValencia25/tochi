@@ -123,4 +123,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    // ==========================================
+    // 7. MODO NOCHE DE CUCHARITA (EASTER EGG)
+    // ==========================================
+    const firmaSecreta = document.getElementById('firma-secreta');
+    
+    if (firmaSecreta) {
+        // "dblclick" es el evento de doble clic / doble tap
+        firmaSecreta.addEventListener('click', () => {
+            document.body.classList.toggle('modo-noche');
+            
+            // Si se acaba de activar, le tiramos un cartelito re tierno
+            if (document.body.classList.contains('modo-noche')) {
+                alert("✨ Modo Noche de Cucharita activado. Hora de apagar la luz y dormir pegaditos. Te amo. ✨");
+                
+                // Tiramos una lluvia de mariposas especial por descubrir el secreto
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(crearMariposa, Math.random() * 1000);
+                }
+            }
+        });
+    }
 });
