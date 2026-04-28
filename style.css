@@ -256,6 +256,38 @@ footer {
     color: #829689;
 }
 
+
+/* =========================================
+   EFECTO DE MARIPOSAS VOLANDO
+========================================= */
+.mariposa {
+    position: fixed;
+    bottom: -50px; /* Nacen justo por debajo del borde de la pantalla */
+    z-index: 9999; /* Para que pasen por encima de todo */
+    pointer-events: none; /* CLAVE: Para que no interfieran si ella quiere tocar un botón y la mariposa pasa por encima */
+    animation: volar linear infinite;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); /* Una sombrita suave */
+}
+
+/* La animación que las hace subir y moverse un poquito de lado */
+@keyframes volar {
+    0% {
+        transform: translateY(0) translateX(0) rotate(-15deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8; /* Aparecen suavemente */
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        /* Suben más de la altura de la pantalla y se mueven hacia la derecha */
+        transform: translateY(-110vh) translateX(150px) rotate(15deg);
+        opacity: 0; /* Desaparecen suavemente arriba */
+    }
+}
+
 /* =========================================
    ADAPTACIÓN PARA CELULARES (RESPONSIVE)
 ========================================= */

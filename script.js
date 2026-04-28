@@ -18,7 +18,7 @@ cabeceras.forEach(cabecera => {
 });
 
 // Lógica del contador de días
-const fechaInicio = new Date(2025, 11, 12); // Año, Mes (Mayo es 4), Día
+const fechaInicio = new Date(2025, 11, 11); // Año, Mes (Mayo es 4), Día
 
 function actualizarContador() {
     const ahora = new Date();
@@ -27,9 +27,46 @@ function actualizarContador() {
     
     const contadorElemento = document.getElementById('contador');
     if(contadorElemento) {
-        contadorElemento.innerHTML = diasTotales + " días eligiéndonos todos los días.";
+        contadorElemento.innerHTML = diasTotales + " días eligiéndonos y amándonos.";
     }
 }
 
 actualizarContador();
 setInterval(actualizarContador, 60000);
+
+// ==========================================
+// CREADOR DE MARIPOSAS (MODO LLUVIA INTENSA)
+// ==========================================
+function crearMariposa() {
+    const mariposa = document.createElement('div');
+    mariposa.classList.add('mariposa');
+    
+    mariposa.innerHTML = '🦋';
+    
+    // Posición horizontal aleatoria
+    mariposa.style.left = Math.random() * 100 + 'vw';
+    
+    // Duración aleatoria (entre 8 y 15 segundos para que haya distintas velocidades)
+    const duracion = Math.random() * 7 + 8;
+    mariposa.style.animationDuration = duracion + 's';
+    
+    // Tamaño aleatorio (entre 1rem y 3rem para más variedad)
+    const tamano = Math.random() * 2 + 1; 
+    mariposa.style.fontSize = tamano + 'rem';
+    
+    document.body.appendChild(mariposa);
+    
+    // Se elimina cuando termina de volar para no saturar la RAM del celu
+    setTimeout(() => {
+        mariposa.remove();
+    }, duracion * 1000);
+}
+
+// 1. EXPLOSIÓN INICIAL: Creamos 25 mariposas de golpe apenas entra a la página
+// Le ponemos un mini delay aleatorio a cada una para que no salgan exactamente en bloque
+for (let i = 0; i < 25; i++) {
+    setTimeout(crearMariposa, Math.random() * 3000);
+}
+
+// 2. LLUVIA CONSTANTE: Creamos una mariposa nueva cada 350 milisegundos (¡es un montón!)
+setInterval(crearMariposa, 350);
