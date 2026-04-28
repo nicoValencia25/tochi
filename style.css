@@ -555,3 +555,68 @@ body.modo-noche .contador {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
 }
+
+/* =========================================
+   ESTRELLA FUGAZ Y CIELO DE DESEOS
+========================================= */
+
+/* El texto de invitación (oculto por defecto) */
+.instruccion-noche {
+    display: none; /* Solo se activa en modo noche */
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: #b0c4de;
+    text-align: center;
+    margin-top: 20px;
+    opacity: 0.8;
+}
+
+/* Forzamos a que se vea cuando el body tiene la clase modo-noche */
+body.modo-noche .instruccion-noche {
+    display: block;
+    animation: aparecerSuave 2s ease;
+}
+
+@keyframes aparecerSuave {
+    from { opacity: 0; }
+    to { opacity: 0.8; }
+}
+
+/* La estrella fugaz */
+.estrella-fugaz {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 4px #fff, 0 0 100px 8px #fff;
+    z-index: 3000;
+    pointer-events: none; /* Para que no se pueda tocar */
+}
+
+/* La estela de la estrella */
+.estrella-fugaz::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+}
+
+/* Animación del vuelo diagonal */
+.animar-estrella {
+    animation: vueloEstrella 2.5s linear forwards;
+}
+
+@keyframes vueloEstrella {
+    0% {
+        transform: translate(0, 0) rotate(-35deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-100vw, 100vh) rotate(-35deg);
+        opacity: 0;
+    }
+}

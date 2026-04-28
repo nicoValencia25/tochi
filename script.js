@@ -177,24 +177,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     // ==========================================
-    // 7. MODO NOCHE DE CUCHARITA (EASTER EGG)
+    // 7. MODO NOCHE Y CIELO DE DESEOS
     // ==========================================
     const firmaSecreta = document.getElementById('firma-secreta');
     
     if (firmaSecreta) {
-        // "dblclick" es el evento de doble clic / doble tap
         firmaSecreta.addEventListener('click', () => {
             document.body.classList.toggle('modo-noche');
             
-            // Si se acaba de activar, le tiramos un cartelito re tierno
             if (document.body.classList.contains('modo-noche')) {
-                alert("✨ Modo Noche de Cucharita activado. Hora de apagar la luz y dormir pegaditos. Te amo. ✨");
-                
-                // Tiramos una lluvia de mariposas especial por descubrir el secreto
-                for (let i = 0; i < 30; i++) {
-                    setTimeout(crearMariposa, Math.random() * 1000);
-                }
+                alert("✨ Modo Noche de Cucharita activado. ✨");
             }
         });
     }
+
+    // Lógica para pedir el deseo al tocar el fondo
+    document.body.addEventListener('click', (e) => {
+        // Solo funciona si el modo noche está activo Y no estamos tocando un botón o foto
+        if (document.body.classList.contains('modo-noche') && e.target === document.body) {
+            
+            const estrella = document.createElement('div');
+            estrella.className = 'estrella-fugaz animar-estrella';
+            
+            // La estrella sale desde donde ella tocó o desde la esquina superior derecha
+            estrella.style.top = e.clientY + 'px';
+            estrella.style.left = e.clientX + 'px';
+            
+            document.body.appendChild(estrella);
+
+            // Después de que pase la estrella (1.2 segundos), mostramos tu mensaje
+            setTimeout(() => {
+                estrella.remove();
+                alert("💚 Tochi: Yo pedí mi deseo y se hizo realidad el día que te conocí. Te amo con toda mi alma. 💚");
+            }, 1200);
+        }
+    });
 });
