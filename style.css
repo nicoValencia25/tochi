@@ -556,25 +556,35 @@ body.modo-noche .contador {
     50% { opacity: 0; }
 }
 
-/* =========================================
-   ESTRELLA FUGAZ Y CIELO DE DESEOS
-========================================= */
-
-/* El texto de invitación (oculto por defecto) */
-.instruccion-noche {
-    display: none; /* Solo se activa en modo noche */
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.8rem;
+/* EL BOTÓN DE DESEOS (Solo visible en modo noche) */
+.btn-deseo {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    bottom: 100px; /* Lo ponemos arriba del footer y del botón de mimos */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.05);
     color: #b0c4de;
-    text-align: center;
-    margin-top: 20px;
-    opacity: 0.8;
+    border: 1px solid rgba(176, 196, 222, 0.4);
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    transition: all 0.3s ease;
 }
 
-/* Forzamos a que se vea cuando el body tiene la clase modo-noche */
-body.modo-noche .instruccion-noche {
-    display: block;
+body.modo-noche .btn-deseo {
+    display: block; /* Solo aparece cuando se hace de noche */
     animation: aparecerSuave 2s ease;
+}
+
+.btn-deseo:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 15px rgba(176, 196, 222, 0.5);
+    transform: translateX(-50%) scale(1.05);
 }
 
 @keyframes aparecerSuave {

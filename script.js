@@ -191,25 +191,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Lógica para pedir el deseo al tocar el fondo
-    document.body.addEventListener('click', (e) => {
-        // Solo funciona si el modo noche está activo Y no estamos tocando un botón o foto
-        if (document.body.classList.contains('modo-noche') && e.target === document.body) {
-            
+    // Lógica para pedir el deseo al tocar el BOTÓN
+    const btnDeseo = document.getElementById('btn-deseo');
+
+    if (btnDeseo) {
+        btnDeseo.addEventListener('click', (e) => {
+            // Evitamos que el clic se propague y rompa otra cosa
+            e.stopPropagation();
+
             const estrella = document.createElement('div');
             estrella.className = 'estrella-fugaz animar-estrella';
             
-            // La estrella sale desde donde ella tocó o desde la esquina superior derecha
-            estrella.style.top = e.clientY + 'px';
-            estrella.style.left = e.clientX + 'px';
+            // Hacemos que la estrella nazca arriba a la derecha para que cruce bien la pantalla
+            estrella.style.top = '10vh';
+            estrella.style.left = '90vw';
             
             document.body.appendChild(estrella);
 
-            // Después de que pase la estrella (1.2 segundos), mostramos tu mensaje
+            // Ocultamos el botón un ratito para que no lo apriete 20 veces seguidas
+            btnDeseo.style.display = 'none';
+
+            // Después de 2.5 segundos, mostramos el mensaje y devolvemos el botón
             setTimeout(() => {
                 estrella.remove();
                 alert("💚 Tochi: Yo pedí mi deseo y se hizo realidad el día que te conocí. Te amo con toda mi alma. 💚");
-            }, 1200);
-        }
-    });
+                
+                // Si sigue en modo noche, volvemos a mostrar el botón
+                if(document.body.classList.contains('modo-noche')) {
+                    btnDeseo.style.display = 'block';
+                }
+            }, 2500);
+        });
+    }
 });
