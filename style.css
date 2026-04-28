@@ -359,3 +359,126 @@ footer {
         height: 300px; 
     }
 }
+
+/* =========================================
+   BOTÓN DE MIMOS DE EMERGENCIA Y VENTANA
+========================================= */
+.btn-mimos {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, var(--color-secundario), var(--color-principal));
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(124, 163, 143, 0.5);
+    cursor: pointer;
+    z-index: 1000; /* Siempre por encima de la página */
+    transition: transform 0.3s ease;
+    animation: latido 2s infinite; /* Hace que el botón palpite */
+}
+
+.btn-mimos:hover {
+    transform: scale(1.1);
+    animation: none; 
+}
+
+@keyframes latido {
+    0% { transform: scale(1); }
+    10% { transform: scale(1.08); }
+    20% { transform: scale(1); }
+    30% { transform: scale(1.08); }
+    40% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+/* El fondo borroso de la ventanita */
+.modal-mimos {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(252, 249, 245, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* Clase para esconderla */
+.modal-mimos.oculta {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* La cajita de cristal donde va el texto */
+.modal-contenido {
+    background: var(--cristal-fondo);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: var(--sombra-suave);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-mimos.oculta .modal-contenido {
+    transform: translateY(50px); /* Efecto de que cae al desaparecer */
+}
+
+/* La X para cerrar */
+.cerrar-modal {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2.5rem;
+    color: var(--color-secundario);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.cerrar-modal:hover {
+    transform: scale(1.2) rotate(90deg);
+}
+
+.modal-titulo {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.texto-mimo {
+    font-size: 1.4rem;
+    color: var(--color-texto);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.firma-modal {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    color: var(--color-secundario);
+    margin-bottom: 0;
+}
+
+/* Ajuste para que en el celu el botón no estorbe */
+@media (max-width: 768px) {
+    .btn-mimos {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}
