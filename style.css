@@ -255,3 +255,64 @@ footer {
     font-size: 1.2rem;
     color: #829689;
 }
+
+/* =========================================
+   ADAPTACIÓN PARA CELULARES (RESPONSIVE)
+========================================= */
+@media (max-width: 768px) {
+    /* Achicamos el título principal y el subtítulo */
+    .hero-content h1 { 
+        font-size: 3.5rem; 
+    }
+    .hero-content p { 
+        font-size: 1.2rem; 
+    }
+    .contador { 
+        font-size: 1rem; 
+        padding: 10px 20px; 
+    }
+    
+    /* Achicamos los títulos de las secciones */
+    .cartas-lista-section h2, .galeria-section h2 { 
+        font-size: 2.5rem; 
+    }
+    .subtitulo-galeria { 
+        font-size: 1.1rem; 
+    }
+    
+    /* Ajustamos los botones del acordeón */
+    .carta-cabecera { 
+        padding: 20px 15px; 
+        font-size: 1.1rem; 
+    }
+    .icono-expandir { 
+        font-size: 1.8rem; 
+    }
+    
+    /* === EL ARREGLO DEL TEXTO === */
+    .texto-interno { 
+        padding: 0 20px 30px 20px; 
+        font-size: 1.1rem; /* Achicamos un poco la letra */
+    }
+    .texto-interno p {
+        text-align: left; /* Esto evita que las letras se separen raro */
+        margin-bottom: 15px;
+    }
+    
+    .titulo-doc { 
+        font-size: 2rem; 
+    }
+    .firma { 
+        font-size: 2.2rem; 
+    }
+    
+    /* Ajuste de las Polaroids para que no se desborden de la pantalla */
+    .polaroid { 
+        width: 100%; 
+        max-width: 300px; 
+        padding: 15px 15px 25px 15px; 
+    }
+    .polaroid img { 
+        height: 300px; 
+    }
+}
