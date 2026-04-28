@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   NUEVA PALETA: VERDE PASTEL CON CORAZONES
+========================================= */
+:root {
+    --color-fondo: #fcf9f5; /* Color base */
+    --color-texto: #404a43;
+    --color-principal: #b3d4c6; /* Verde pastel clarito */
+    --color-secundario: #7ca38f; /* Verde salvia para títulos */
+    --color-linea: #9ac2af;
+    --cristal-fondo: rgba(255, 255, 255, 0.9);
+    --sombra-suave: 0 10px 30px rgba(124, 163, 143, 0.15);
+}
+
+body {
+    background-color: var(--color-fondo);
+    
+    /* === ACÁ ESTÁ LA MAGIA DE LOS CORAZONES === */
+    /* Generamos un patrón de corazones sutiles usando un SVG de fondo directo en CSS */
+    /* El color de los corazones es una variante muy suave del verde pastel (#b3d4c6) con poca opacidad (0.08) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 85c-20-15-40-30-40-50 0-11 9-20 20-20 5 0 10 2 15 6 5-4 10-6 15-6 11 0 20 9 20 20 0 20-20 35-40 50z' fill='%23b3d4c6' fill-opacity='0.08'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-position: center;
+    background-attachment: fixed; /* Los corazones se quedan quietos al hacer scroll */
+    
+    font-family: 'Lora', serif;
+    line-height: 1.8;
+    font-size: 1.2rem;
+    overflow-x: hidden;
+}
+
+h1, h2, .titulo-doc, .firma, .caption {
+    font-family: 'Dancing Script', cursive;
+    color: var(--color-secundario);
+    font-weight: 600;
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: linear-gradient(to bottom, rgba(252, 249, 245, 0.4), rgba(252, 249, 245, 1)), url('TU_FOTO_DE_FONDO.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.hero-content {
+    padding: 40px;
+}
+
+.hero-content h1 {
+    font-size: 6.5rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.hero-content p {
+    font-size: 1.6rem;
+    font-style: italic;
+    margin-bottom: 30px;
+    color: #6e8275;
+}
+
+.contador {
+    font-size: 1.4rem;
+    color: var(--color-secundario);
+    background: var(--cristal-fondo);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: var(--sombra-suave);
+    display: inline-block;
+    font-weight: bold;
+}
+
+.cartas-lista-section {
+    padding: 80px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cartas-lista-section h2 {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.subtitulo-galeria {
+    font-style: italic;
+    color: #6e8275;
+    font-size: 1.4rem;
+    margin-bottom: 40px;
+}
+
+.acordeon {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+.carta-item {
+    background: var(--cristal-fondo);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 15px;
+    box-shadow: var(--sombra-suave);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.carta-item:hover {
+    box-shadow: 0 15px 30px rgba(124, 163, 143, 0.25);
+}
+
+.carta-cabecera {
+    width: 100%;
+    padding: 30px 40px;
+    background: transparent;
+    border: none;
+    font-family: 'Lora', serif;
+    font-size: 1.5rem;
+    color: var(--color-secundario);
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.carta-cabecera:hover {
+    background: rgba(124, 163, 143, 0.08);
+}
+
+.fecha-btn {
+    pointer-events: none;
+}
+
+.icono-expandir {
+    font-size: 2.2rem;
+    font-weight: normal;
+    color: var(--color-linea);
+    transition: transform 0.4s ease;
+    pointer-events: none;
+}
+
+.carta-contenido {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease-out;
+}
+
+.texto-interno {
+    padding: 0 40px 50px 40px;
+    font-size: 1.3rem; 
+    border-top: 2px dashed rgba(124, 163, 143, 0.3);
+    margin-top: 10px;
+    padding-top: 30px;
+}
+
+.texto-interno p {
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+.titulo-doc {
+    font-size: 3rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.firma {
+    font-size: 3rem;
+    text-align: right;
+    margin-top: 50px;
+    margin-bottom: 0;
+}
+
+.carta-item.activa .carta-contenido {
+    max-height: 5000px; 
+    transition: max-height 1s ease-in;
+}
+
+.carta-item.activa .icono-expandir {
+    transform: rotate(45deg);
+    color: var(--color-secundario);
+}
+
+.galeria-section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.galeria-section h2 {
+    font-size: 4.5rem;
+    margin-bottom: 10px;
+}
+
+.polaroid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.polaroid {
+    background: #fff;
+    padding: 20px 20px 30px 20px;
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    width: 320px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: 1px solid #eee;
+}
+
+.polaroid img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+    filter: sepia(10%); 
+}
+
+.caption {
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+.polaroid:nth-child(odd) { transform: rotate(-3deg); }
+.polaroid:nth-child(even) { transform: rotate(4deg); }
+.polaroid:nth-child(3n) { transform: rotate(-2deg); }
+
+.polaroid:hover {
+    transform: scale(1.05) rotate(0deg);
+    box-shadow: 0 20px 40px rgba(124, 163, 143, 0.25);
+    z-index: 10;
+}
+
+footer {
+    text-align: center;
+    padding: 60px 20px;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #829689;
+}
