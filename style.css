@@ -630,3 +630,21 @@ body.modo-noche .btn-deseo {
         opacity: 0;
     }
 }
+
+.corazon-nuevo {
+    display: inline-block;
+    margin-left: 8px;
+    animation: latidoNuevo 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 5px rgba(124, 163, 143, 0.6));
+}
+
+@keyframes latidoNuevo {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* En modo noche, le damos un brillo un poco más azulado/celeste */
+body.modo-noche .corazon-nuevo {
+    filter: drop-shadow(0 0 8px rgba(138, 164, 200, 0.8));
+}
