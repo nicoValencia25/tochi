@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi chispita 💚</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            /* NUEVO FONDO: Marfil/crema muy claro, suave y luminoso */
+            background: #FAF7F2;
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+        }
+        
+        canvas { 
+            display: block; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            z-index: 1; 
+        }
+        
+        /* BOTÓN CORREGIDO: Blanco sólido y bien nítido */
+        .btn-centro {
+            position: relative;
+            z-index: 10;
+            background: #ffffff; /* Blanco puro sin transparencias */
+            color: #4a7c59; /* Verde botánico */
+            border: 2px solid #4a7c59;
+            padding: 8px 20px; 
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: 'Lora', serif;
+            font-size: 0.95rem; 
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
+        }
+
+        .btn-centro:hover {
+            background: #4a7c59;
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(74, 124, 89, 0.35);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="6meses.html" class="btn-centro">Entrar a nuestros 6 meses ✨</a>
+
+    <canvas id="c"></canvas>
+
+    <script>
+        const canvas = document.getElementById("c");
+        const ctx = canvas.getContext("2d");
+        
+        function redimensionar() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', redimensionar);
+        redimensionar();
+
+        let angle = 0;
+        const NUM_STEPS = 70;
+        const SCALE = 16; 
+        const TEXT = "te amo tochi"; 
+
+        function heartX(t) { return 16 * Math.pow(Math.sin(t), 3); }
+        function heartY(t) { return 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t); }
+
+        function draw() {
+            // Sincronizado con el color #FAF7F2 (RGB: 250, 247, 242)
+            // Mantenemos la opacidad alta para que las letras sigan viéndose nítidas
+            ctx.fillStyle = "rgba(250, 247, 242, 0.45)"; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            
+            ctx.font = "bold 14px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#4a7c59"; 
+
+            for (let i = 0; i < NUM_STEPS; i++) {
+                let t = (i * Math.PI * 2) / NUM_STEPS + angle;
+                let x = cx + heartX(t) * SCALE;
+                let y = cy - heartY(t) * SCALE; 
+                
+                ctx.fillText(TEXT, x, y);
+            }
+            
+            angle += 0.003; 
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
