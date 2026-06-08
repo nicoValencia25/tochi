@@ -370,10 +370,10 @@ footer {
     background: linear-gradient(135deg, var(--color-secundario), var(--color-principal));
     color: white;
     border: none;
-    padding: 15px 25px;
+    padding: 8px 14px;
     border-radius: 50px;
     font-family: 'Lora', serif;
-    font-size: 1.1rem;
+    font-size: 0.85rem;
     font-weight: bold;
     box-shadow: 0 10px 25px rgba(124, 163, 143, 0.5);
     cursor: pointer;
