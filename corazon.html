@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi chispita 💚</title>
+    <title>Para mi amor 💚</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            /* NUEVO FONDO: Marfil/crema muy claro, suave y luminoso */
-            background: #FAF7F2;
+            background: #FAF7F2; /* Crema ultra claro */
             overflow: hidden; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             height: 100vh; 
+            /* Previene comportamientos raros de zoom táctil en móviles */
+            touch-action: none; 
         }
         
         canvas { 
@@ -25,21 +26,25 @@
             z-index: 1; 
         }
         
-        /* BOTÓN CORREGIDO: Blanco sólido y bien nítido */
+        /* Botón Blanco y Botánico */
         .btn-centro {
             position: relative;
             z-index: 10;
-            background: #ffffff; /* Blanco puro sin transparencias */
-            color: #4a7c59; /* Verde botánico */
+            background: #ffffff; 
+            color: #4a7c59; 
             border: 2px solid #4a7c59;
-            padding: 8px 20px; 
+            padding: 10px 20px; 
             border-radius: 50px;
             text-decoration: none;
             font-family: 'Lora', serif;
-            font-size: 0.95rem; 
+            font-size: 1rem; 
             font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
+            /* Reglas Responsive para el botón */
+            text-align: center;
+            max-width: 85%; /* Evita que toque los bordes del celular */
+            word-wrap: break-word; /* Si el texto es largo, lo baja a otra línea */
         }
 
         .btn-centro:hover {
@@ -47,6 +52,14 @@
             color: #ffffff;
             box-shadow: 0 6px 20px rgba(74, 124, 89, 0.35);
             transform: scale(1.05);
+        }
+
+        /* Ajuste específico para celulares (pantallas de menos de 480px de ancho) */
+        @media (max-width: 480px) {
+            .btn-centro {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
         }
     </style>
 </head>
@@ -60,38 +73,54 @@
         const canvas = document.getElementById("c");
         const ctx = canvas.getContext("2d");
         
+        // Variables dinámicas que van a cambiar según la pantalla
+        let SCALE = 16; 
+        let fontSize = 14;
+
+        // El motor de re-escalado
         function redimensionar() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            
+            // Si la pantalla es angosta (celulares/tablets chicas)
+            if (window.innerWidth < 600) {
+                // Hacemos que la escala dependa del ancho de la pantalla para que nunca se corte
+                SCALE = window.innerWidth / 26; 
+                fontSize = 12; // Achicamos un pelín la letra del "te amo tochi" para que no se empaste
+            } else {
+                // Valores estándar para PC
+                SCALE = 16;
+                fontSize = 14;
+            }
         }
+        
+        // Ejecutamos la función apenas arranca y cada vez que ella gire el celular
         window.addEventListener('resize', redimensionar);
         redimensionar();
 
         let angle = 0;
         const NUM_STEPS = 70;
-        const SCALE = 16; 
         const TEXT = "te amo tochi"; 
 
         function heartX(t) { return 16 * Math.pow(Math.sin(t), 3); }
         function heartY(t) { return 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t); }
 
         function draw() {
-            // Sincronizado con el color #FAF7F2 (RGB: 250, 247, 242)
-            // Mantenemos la opacidad alta para que las letras sigan viéndose nítidas
             ctx.fillStyle = "rgba(250, 247, 242, 0.45)"; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
             
-            ctx.font = "bold 14px Arial";
+            // Usamos la variable dinámica de fuente
+            ctx.font = `bold ${fontSize}px Arial`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "#4a7c59"; 
 
             for (let i = 0; i < NUM_STEPS; i++) {
                 let t = (i * Math.PI * 2) / NUM_STEPS + angle;
-                let x = cx + heartX(t) * SCALE;
+                let x = cx + heartX(t) * SCALE; // Usamos la escala dinámica
                 let y = cy - heartY(t) * SCALE; 
                 
                 ctx.fillText(TEXT, x, y);
