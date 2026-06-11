@@ -2,36 +2,40 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
     <title>Para mi amor 💚</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background: #FAF7F2; /* Crema ultra claro */
+            background: #FAF7F2; /* Fondo Crema ultra claro (como querías) */
             overflow: hidden; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             height: 100vh; 
-            /* Previene comportamientos raros de zoom táctil en móviles */
+            width: 100vw;
+            /* Previene comportamientos extraños de zoom táctil en móviles */
             touch-action: none; 
         }
         
+        /* El lienzo ocupa TODA la pantalla */
         canvas { 
             display: block; 
             position: absolute; 
             top: 0; 
             left: 0; 
+            width: 100%;
+            height: 100%;
             z-index: 1; 
         }
         
-        /* Botón Blanco y Botánico */
+        /* BOTÓN BLANCO Y BOTÁNICO (Reforzado y Responsive) */
         .btn-centro {
             position: relative;
             z-index: 10;
-            background: #ffffff; 
-            color: #4a7c59; 
+            background: #ffffff; /* Blanco sólido (como querías) */
+            color: #4a7c59; /* Verde botánico */
             border: 2px solid #4a7c59;
             padding: 10px 20px; 
             border-radius: 50px;
@@ -41,9 +45,10 @@
             font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
+            
             /* Reglas Responsive para el botón */
             text-align: center;
-            max-width: 85%; /* Evita que toque los bordes del celular */
+            max-width: 85%; /* Evita que toque los bordes del celular en vertical */
             word-wrap: break-word; /* Si el texto es largo, lo baja a otra línea */
         }
 
@@ -54,8 +59,8 @@
             transform: scale(1.05);
         }
 
-        /* Ajuste específico para celulares (pantallas de menos de 480px de ancho) */
-        @media (max-width: 480px) {
+        /* Ajuste fino para celulares muy angostos */
+        @media (max-width: 400px) {
             .btn-centro {
                 font-size: 0.9rem;
                 padding: 8px 16px;
@@ -73,28 +78,35 @@
         const canvas = document.getElementById("c");
         const ctx = canvas.getContext("2d");
         
-        // Variables dinámicas que van a cambiar según la pantalla
-        let SCALE = 16; 
-        let fontSize = 14;
+        // --- VARIABLES DINÁMICAS QUE CAMBIARÁN SEGÚN LA PANTALLA ---
+        let currentScale = 16; // Factor de tamaño del corazón
+        let currentFontSize = 14; // Tamaño de letra del "te amo tochi"
 
-        // El motor de re-escalado
+        // Función del motor de re-escalado: Se ejecuta al cargar y al girar el celu
         function redimensionar() {
+            // 1. Sincronizamos el tamaño de resolución del lienzo con el tamaño de pantalla
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             
-            // Si la pantalla es angosta (celulares/tablets chicas)
+            // 2. Definimos valores base para PC (pantallas de más de 600px de ancho)
+            const BASE_SCALE = 16;
+            const BASE_FONT_SIZE = 14;
+
+            // 3. LA MAGIA RESPONSIVE: Si es una pantalla angosta (celular/tablet)
             if (window.innerWidth < 600) {
-                // Hacemos que la escala dependa del ancho de la pantalla para que nunca se corte
-                SCALE = window.innerWidth / 26; 
-                fontSize = 12; // Achicamos un pelín la letra del "te amo tochi" para que no se empaste
+                // Hacemos que la escala dependa directamente del ancho de la pantalla
+                // y le ponemos límites (Math.max/min) para que nunca sea ni muy chico ni muy grande.
+                currentScale = Math.max(7, Math.min(BASE_SCALE, window.innerWidth / 40)); 
+                // Hacemos lo mismo con el tamaño de la fuente para que no se empaste
+                currentFontSize = Math.max(10, Math.min(BASE_FONT_SIZE, window.innerWidth / 35));
             } else {
-                // Valores estándar para PC
-                SCALE = 16;
-                fontSize = 14;
+                // Si es PC, mantenemos los valores originales
+                currentScale = BASE_SCALE;
+                currentFontSize = BASE_FONT_SIZE;
             }
         }
         
-        // Ejecutamos la función apenas arranca y cada vez que ella gire el celular
+        // Ejecutamos la función apenas arranca la página
         window.addEventListener('resize', redimensionar);
         redimensionar();
 
@@ -102,34 +114,39 @@
         const NUM_STEPS = 70;
         const TEXT = "te amo tochi"; 
 
+        // Fórmulas matemáticas del corazón
         function heartX(t) { return 16 * Math.pow(Math.sin(t), 3); }
         function heartY(t) { return 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t); }
 
         function draw() {
+            // Esta línea limpia la pantalla con una estela semitransparente del color de fondo (#FAF7F2)
             ctx.fillStyle = "rgba(250, 247, 242, 0.45)"; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
             
-            // Usamos la variable dinámica de fuente
-            ctx.font = `bold ${fontSize}px Arial`;
+            // Usamos las variables dinámicas calculadas en redimensionar()
+            ctx.font = `bold ${currentFontSize}px Arial`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillStyle = "#4a7c59"; 
+            ctx.fillStyle = "#4a7c59"; // Verde botánico
 
             for (let i = 0; i < NUM_STEPS; i++) {
                 let t = (i * Math.PI * 2) / NUM_STEPS + angle;
-                let x = cx + heartX(t) * SCALE; // Usamos la escala dinámica
-                let y = cy - heartY(t) * SCALE; 
+                // Multiplicamos la fórmula por currentScale (el factor responsive)
+                let x = cx + heartX(t) * currentScale; 
+                let y = cy - heartY(t) * currentScale; 
                 
                 ctx.fillText(TEXT, x, y);
             }
             
+            // Velocidad suave de rotación
             angle += 0.003; 
             requestAnimationFrame(draw);
         }
 
+        // Iniciamos la animación
         draw();
     </script>
 </body>
