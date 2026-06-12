@@ -30,26 +30,29 @@
             z-index: 1; 
         }
         
-        /* BOTÓN BLANCO Y BOTÁNICO (Reforzado y Responsive) */
+       /* BOTÓN BLANCO Y BOTÁNICO (100% Fluido y Responsive) */
         .btn-centro {
             position: relative;
             z-index: 10;
-            background: #ffffff; /* Blanco sólido (como querías) */
-            color: #4a7c59; /* Verde botánico */
+            background: #ffffff; 
+            color: #4a7c59; 
             border: 2px solid #4a7c59;
-            padding: 10px 20px; 
             border-radius: 50px;
             text-decoration: none;
             font-family: 'Lora', serif;
-            font-size: 1rem; 
             font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
-            
-            /* Reglas Responsive para el botón */
             text-align: center;
-            max-width: 85%; /* Evita que toque los bordes del celular en vertical */
-            word-wrap: break-word; /* Si el texto es largo, lo baja a otra línea */
+            display: inline-block;
+            
+            /* LA MAGIA RESPONSIVE: clamp(Mínimo, Escala Dinámica, Máximo) */
+            /* El relleno y la letra crecen o se achican suavemente según el tamaño del celu */
+            padding: clamp(8px, 2vh, 12px) clamp(16px, 5vw, 24px); 
+            font-size: clamp(0.75rem, 3.5vw, 1rem); 
+            
+            /* Tope máximo de ancho para que respire en los costados */
+            max-width: 80vw; 
         }
 
         .btn-centro:hover {
@@ -58,14 +61,8 @@
             box-shadow: 0 6px 20px rgba(74, 124, 89, 0.35);
             transform: scale(1.05);
         }
-
-        /* Ajuste fino para celulares muy angostos */
-        @media (max-width: 400px) {
-            .btn-centro {
-                font-size: 0.9rem;
-                padding: 8px 16px;
-            }
-        }
+        
+        /* (Ya podés borrar la regla @media (max-width: 400px) que tenías abajo, ya no hace falta) */
     </style>
 </head>
 <body>
