@@ -30,12 +30,9 @@
             z-index: 1; 
         }
         
-       /* BOTÓN BLANCO Y BOTÁNICO (100% Fluido y Responsive) */
-        .btn-centro {
+       .btn-centro {
             position: relative;
-
-            top: -6vh;
-
+            top: -6vh; /* Mantenemos la corrección para que quede en el centro visual */
             z-index: 10;
             background: #ffffff; 
             color: #4a7c59; 
@@ -49,12 +46,10 @@
             text-align: center;
             display: inline-block;
             
-            /* LA MAGIA RESPONSIVE: clamp(Mínimo, Escala Dinámica, Máximo) */
-            /* El relleno y la letra crecen o se achican suavemente según el tamaño del celu */
-            padding: clamp(8px, 2vh, 12px) clamp(16px, 5vw, 24px); 
-            font-size: clamp(0.75rem, 3.5vw, 1rem); 
+            /* Apenas más chico: bajamos un poco los valores de padding y font-size */
+            padding: clamp(6px, 1.5vh, 10px) clamp(12px, 4vw, 20px); 
+            font-size: clamp(0.7rem, 3vw, 0.9rem); 
             
-            /* Tope máximo de ancho para que respire en los costados */
             max-width: 80vw; 
         }
 
@@ -64,8 +59,6 @@
             box-shadow: 0 6px 20px rgba(74, 124, 89, 0.35);
             transform: scale(1.05);
         }
-        
-        /* (Ya podés borrar la regla @media (max-width: 400px) que tenías abajo, ya no hace falta) */
     </style>
 </head>
 <body>
